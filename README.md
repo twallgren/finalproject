@@ -59,5 +59,11 @@ username: api-user
 password: 1234pass
 ```
 
+#### Rubric
+| Section    | Points |
+|------------|--------|
+| unit-tests | pts |
+| functional | pts |
+
 
 **Final Project is worth 100 points**
