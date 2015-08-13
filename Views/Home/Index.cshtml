@@ -1,0 +1,98 @@
+﻿<script>
+    /*$(function () {
+        
+    });*/
+    function getLoginForm() {
+        $.ajax({
+            url: "api/auth",
+            method: "GET",
+            async: false,
+            username: "api-user",
+            password: "1234pass",
+            success: function (data, textStatus, jqXHR) {
+                $("#bodyContent").html(data);
+            }
+        });
+    }
+    function login()
+    {
+        $("#loginButton").attr("value", "Submitting...");
+        //testData = $("form").serializeArray();
+        //alert(JSON.stringify(testData));
+        $.ajax({
+            url: "api/auth/"+$("#username").val(),
+            type: "POST",
+            username: "api-user",
+            password: "1234pass",
+            data: $("form").serializeArray(),
+            success: function (data, textStatus, jqXHR) {
+                if (data=="true")
+                {
+                    $("#bodyContent").html("The user has successfully authenticated!");
+                }
+                else
+                {
+                    $("#bodyContent").html("Invalid Username/Password");
+                }
+            }
+        });
+    }
+    function emulateLogin()
+    {
+        getLoginForm();
+        login();
+    }
+    function getLoginAttempts()
+    {
+        $.ajax({
+            url: "api/logins",
+            method: "GET",
+            username: "api-user",
+            password: "1234pass",
+            success: function (data, textStatus, jqXHR) {
+                $("#bodyContent").html(data);
+            }
+        });
+    }
+    function getLoginAttempt(id)
+    {
+        $.ajax({
+            url: "api/logins/"+id,
+            method: "GET",
+            username: "api-user",
+            password: "1234pass",
+            success: function (data, textStatus, jqXHR) {
+                $("#bodyContent").html(data);
+            }
+        });
+    }
+    function deleteLoginAttempt(id)
+    {
+        $.ajax({
+            url: "api/logins/" + id,
+            type: "DELETE",
+            username: "api-user",
+            password: "1234pass",
+            success: function (data, textStatus, jqXHR) {
+                $("#bodyContent").html(data);
+            }
+        });
+    }
+</script>
+<div id="body">
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>Welcome to my final!</h1>
+            </hgroup>
+        </div>
+    </section>
+    <section class="content-wrapper main-content clear-fix">
+        <input type="button" value="1. Get Login Form" onclick="getLoginForm()" />
+        <input type="button" value="2. Send Credentials" onclick="emulateLogin()" />
+        <input type="button" value="3. Get Login Attempts" onclick="getLoginAttempts()" />
+        <input type="button" value="4. Get Specific Login Attempt (5)" onclick="getLoginAttempt(5)" />
+        <input type="button" value="5. Delete Specific Login Attempt (5)" onclick="deleteLoginAttempt(5)" />
+        <div id="bodyContent"></div>
+    </section>
+</div>
